@@ -31,23 +31,21 @@ const setPokemonToCache=(userId,value)=>{
     const pokemonCache=getPokemonCache()
     const data=pokemonCache.data
 
-    cleanUpStorage(data)
 
+    const item={
+        id:userId,
+        expiry:new Date().getTime()+TWO_WEEKS,
+        pokemon:value
+    }
 
-    // const item={
-    //     id:userId,
-    //     expiry:new Date().getTime()+TWO_WEEKS,
-    //     pokemon:value
-    // }
+    data[userId]=item
 
-    // data[userId]=item
-
-    // try{
-    //     localStorage.setItem(POKEMON_CACHE,JSON.stringify(pokemonCache))
-    // }
-    // catch(e){
-    //     cleanUpStorage(data)
-    // }
+    try{
+        localStorage.setItem(POKEMON_CACHE,JSON.stringify(pokemonCache))
+    }
+    catch(e){
+        cleanUpStorage(data)
+    }
 
 }
 
@@ -58,12 +56,10 @@ const cleanUpStorage=(data)=>{
     let oldestKey
 
 
-    //if 30 days have been passed, it removes the cache
+    //if 14 days have been passed, it removes the cache
     for (const key in data) {
-        console.log("key is",key)
         const expiry = data[key].expiry
-        if (expiry && expiry-TWO_WEEKS <=currentTime()) {
-          console.log("girdi iceri",expiry-TWO_WEEKS,currentTime())
+        if (expiry && expiry <=currentTime()) {
           delete data[key]
           isDeleted = true
         }

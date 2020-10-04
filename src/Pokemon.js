@@ -7,7 +7,6 @@ const Pokemon=(props)=>{
             try{
                 let res=await fetch(`https://pokeapi.co/api/v2/pokemon/${props.pokemon}`)
                 let pokemon_data=await res.json()
-                console.log(pokemon_data)
                 setPokemonDetails(pokemon_data)
             }
             catch(e){
@@ -21,7 +20,6 @@ const Pokemon=(props)=>{
         return null
     }
 
-    console.log("po",pokemonDetails.sprites.front_default)
 
     return(
 
